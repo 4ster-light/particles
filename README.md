@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">Particle Simulation</h1>
+# Particles Simulation
 
 ## How to run
 > [!IMPORTANT]
