@@ -7,5 +7,5 @@ function visualize_simulation(positions::Vector{Vector{Tuple{Float64,Float64}}},
             markersize=5, legend=false, aspect_ratio=:equal)
     end
 
-    gif(anim, "particle_simulation_with_collisions.gif", fps=30)
+    gif(anim, "simulation.gif", fps=30)
 end
