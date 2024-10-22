@@ -4,7 +4,7 @@
 > [!IMPORTANT]
 > You need to have Julia already installed in your system.
 >
-> See ![Julia Language official docs](julialang.org)
+> See [Julia Language official docs](julialang.org)
 
 1. Clone this repository.
 2. Navigate to the cloned directory.
