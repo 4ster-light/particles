@@ -6,7 +6,7 @@ local particles = {}
 function love.load()
     love.window.setMode(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT)
     love.window.setTitle("Particle Collision Simulation")
-    
+
     for i = 1, 10 do
         table.insert(particles, Particle.new(math.random(Config.WINDOW_WIDTH), math.random(Config.WINDOW_HEIGHT)))
     end
@@ -36,17 +36,21 @@ function love.draw()
 end
 
 function love.mousepressed(x, y, button)
-    if button == 1 then
-        if x >= 10 and x <= 25 and y >= 40 and y <= 55 then
-            Config.DEBUG_MODE = not Config.DEBUG_MODE
-        else
-            for _, particle in ipairs(particles) do
-                local dx, dy = x - particle.x, y - particle.y
-                if dx * dx + dy * dy < Config.PARTICLE_SIZE * Config.PARTICLE_SIZE then
-                    particle.isDragged = true
-                    particle.lastX, particle.lastY = x, y
-                end
-            end
+    if button ~= 1 then return end
+
+    -- Check if the checkbox was clicked
+    if x >= 10 and x <= 25 and y >= 40 and y <= 55 then
+        Config.DEBUG_MODE = not Config.DEBUG_MODE
+        return
+    end
+
+    -- Check if a particle was clicked
+    for _, particle in ipairs(particles) do
+        local dx, dy = x - particle.x, y - particle.y
+        if dx * dx + dy * dy < Config.PARTICLE_SIZE * Config.PARTICLE_SIZE then
+            particle.isDragged = true
+            particle.lastX, particle.lastY = x, y
+            return
         end
     end
 end
