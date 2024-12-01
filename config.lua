@@ -4,7 +4,7 @@ return {
     PARTICLE_SIZE = 15,
     GRAVITY = 9.81 * 60,
     FRICTION = 0.995,
-    BOUNCE_DAMPING = 0.8,
+    BOUNCE_DAMPING = 0.6,
     DEBUG_MODE = false,
     COLORS = {
         {1, 0.3, 0},    -- Deep orange
