@@ -14,7 +14,7 @@
       {
         packages.default = pkgs.stdenv.mkDerivation {
           name = "particle-simulator";
-          src = ./.;
+          src = ./src;
           
           buildInputs = with pkgs; [
             love
