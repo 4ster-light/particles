@@ -7,7 +7,7 @@ function love.load()
   love.window.setMode(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT)
   love.window.setTitle("Particle Collision Simulation")
 
-  for i = 1, 10 do
+  for _ = 1, 10 do
     table.insert(particles, Particle.new(math.random(Config.WINDOW_WIDTH), math.random(Config.WINDOW_HEIGHT)))
   end
 end
