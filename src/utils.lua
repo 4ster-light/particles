@@ -2,6 +2,10 @@ local Config = require("config")
 
 local Utils = {}
 
+--- Handle collision between two particles
+--- @param p1 Particle
+--- @param p2 Particle
+--- @return nil
 function Utils.handleCollision(p1, p2)
   local dx = p2.x - p1.x
   local dy = p2.y - p1.y

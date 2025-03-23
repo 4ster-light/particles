@@ -1,9 +1,26 @@
 local Config = require("config")
 local Utils = require("utils")
 
+--- @class Particle
+--- @field x number X position
+--- @field y number Y position
+--- @field vx number X velocity
+--- @field vy number Y velocity
+--- @field isDragged boolean Whether the particle is being dragged
+--- @field lastX number Last X position (for drag calculations)
+--- @field lastY number Last Y position (for drag calculations)
+--- @field color table Color in RGB format
+--- @field update function
+--- @field draw function
+--- @field drawDebugInfo function
+
 local Particle = {}
 Particle.__index = Particle
 
+--- Create a new particle
+--- @param x number
+--- @param y number
+--- @return Particle
 function Particle.new(x, y)
   return setmetatable({
     x = x,
@@ -17,6 +34,9 @@ function Particle.new(x, y)
   }, Particle)
 end
 
+--- Update the particle's position and velocity
+--- @param dt number
+--- @param particles table
 function Particle:update(dt, particles)
   if self.isDragged then
     local mx, my = love.mouse.getPosition()
@@ -57,6 +77,8 @@ function Particle:update(dt, particles)
   end
 end
 
+--- Draw the particle
+--- @return nil
 function Particle:draw()
   if self.isDragged then
     love.graphics.setColor(Config.OUTLINE_COLOR)
@@ -71,6 +93,8 @@ function Particle:draw()
   end
 end
 
+--- Draw debug information
+--- @return nil
 function Particle:drawDebugInfo()
   love.graphics.setColor(0, 1, 0)
   love.graphics.line(self.x, self.y, self.x + self.vx * 0.1, self.y + self.vy * 0.1)

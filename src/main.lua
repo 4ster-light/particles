@@ -1,6 +1,7 @@
 local Config = require("config")
 local Particle = require("particle")
 
+--- @type Particle[]
 local particles = {}
 
 function love.load()
