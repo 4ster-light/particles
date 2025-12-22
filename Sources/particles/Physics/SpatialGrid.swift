@@ -29,8 +29,8 @@ class SpatialGrid {
 	}
 
 	func insert(particleIdx: Int, pos: Vector2) {
-		let cellX = Int(pos.x / CELL_SIZE)
-		let cellY = Int(pos.y / CELL_SIZE)
+		let cellX = Int(pos.x / Config.CELL_SIZE)
+		let cellY = Int(pos.y / Config.CELL_SIZE)
 		let idx = getGridIndex(cellX, cellY)
 
 		if grid[idx].generation != currentGeneration {
@@ -38,14 +38,14 @@ class SpatialGrid {
 			grid[idx].indices.removeAll(keepingCapacity: true)
 		}
 
-		if grid[idx].indices.count < MAX_PARTICLES_PER_CELL {
+		if grid[idx].indices.count < Config.MAX_PARTICLES_PER_CELL {
 			grid[idx].indices.append(particleIdx)
 		}
 	}
 
 	func forNearby(pos: Vector2, callback: (Int) -> Void) {
-		let cellX = Int(pos.x / CELL_SIZE)
-		let cellY = Int(pos.y / CELL_SIZE)
+		let cellX = Int(pos.x / Config.CELL_SIZE)
+		let cellY = Int(pos.y / Config.CELL_SIZE)
 
 		for dx in -1...1 {
 			for dy in -1...1 {

@@ -7,23 +7,23 @@ class ParticleSimulator {
 	private var rng: RandomGenerator
 	private var frameCount: Int = 0
 
-	init(maxParticles: Int = MAX_PARTICLES) {
-		self.grid = SpatialGrid(width: GRID_WIDTH, height: GRID_HEIGHT)
+	init(maxParticles: Int = Config.MAX_PARTICLES) {
+		self.grid = SpatialGrid(width: Config.GRID_WIDTH, height: Config.GRID_HEIGHT)
 		self.rng = RandomGenerator()
 		self.particles.reserveCapacity(maxParticles)
 	}
 
 	func update(deltaTime: Float) {
 		// Spawn particles
-		if Raylib.isMouseButtonDown(.left) && particles.count < MAX_PARTICLES {
-			var spawnCount = SPAWN_RATE
-			if Float(particles.count) > Float(MAX_PARTICLES) * 0.85 {
-				spawnCount = SPAWN_RATE / 2
+		if Raylib.isMouseButtonDown(.left) && particles.count < Config.MAX_PARTICLES {
+			var spawnCount = Config.SPAWN_RATE
+			if Float(particles.count) > Float(Config.MAX_PARTICLES) * 0.85 {
+				spawnCount = Config.SPAWN_RATE / 2
 			}
 
 			if spawnCount > 0 {
 				let mousePos = Raylib.getMousePosition()
-				let maxToSpawn = MAX_PARTICLES - particles.count
+				let maxToSpawn = Config.MAX_PARTICLES - particles.count
 				let actualSpawn = min(spawnCount, maxToSpawn)
 
 				for _ in 0..<actualSpawn {
@@ -45,16 +45,16 @@ class ParticleSimulator {
 
 		// Update each particle
 		for i in 0..<particleCount {
-			particles[i].velocity.y += GRAVITY * deltaTime
+			particles[i].velocity.y += Config.GRAVITY * deltaTime
 			particles[i].velocity.x *= 0.999
 
 			// Fast velocity clamp
 			let speedSq =
 				particles[i].velocity.x * particles[i].velocity.x + particles[i].velocity.y
 				* particles[i].velocity.y
-			if speedSq > MAX_VELOCITY * MAX_VELOCITY {
+			if speedSq > Config.MAX_VELOCITY * Config.MAX_VELOCITY {
 				let speed = sqrt(speedSq)
-				let scale = MAX_VELOCITY / speed
+				let scale = Config.MAX_VELOCITY / speed
 				particles[i].velocity.x *= scale
 				particles[i].velocity.y *= scale
 			}
@@ -67,10 +67,12 @@ class ParticleSimulator {
 			PhysicsEngine.handleBoundaryCollisions(particle: &particles[i])
 
 			// Update sleeping state - aggressive sleeping for very slow particles
-			if speedSq < VELOCITY_SLEEP_THRESHOLD * VELOCITY_SLEEP_THRESHOLD {
+			if speedSq < Config.VELOCITY_SLEEP_THRESHOLD * Config.VELOCITY_SLEEP_THRESHOLD {
 				particles[i].sleepingFrames = min(
-					particles[i].sleepingFrames + 3, SLEEPING_THRESHOLD + 10)
-			} else if speedSq < MIN_VELOCITY_FOR_COLLISION * MIN_VELOCITY_FOR_COLLISION {
+					particles[i].sleepingFrames + 3, Config.SLEEPING_THRESHOLD + 10)
+			} else if speedSq < Config.MIN_VELOCITY_FOR_COLLISION
+				* Config.MIN_VELOCITY_FOR_COLLISION
+			{
 				particles[i].sleepingFrames += 1
 			} else {
 				particles[i].sleepingFrames = 0
@@ -84,7 +86,7 @@ class ParticleSimulator {
 		}
 
 		// Collision detection - only for moving particles
-		for _ in 0..<SOLVER_PASSES {
+		for _ in 0..<Config.SOLVER_PASSES {
 			for i in 0..<particleCount {
 				if particles[i].isSleeping() { continue }
 				resolveCollisions(particleIdx: i)
@@ -105,9 +107,10 @@ class ParticleSimulator {
 
 		let fps = Raylib.getFPS()
 		Raylib.drawText("Hold LEFT CLICK to pour sand", 10, 10, 20, .white)
-		Raylib.drawText("Particles: \(particles.count)/\(MAX_PARTICLES)", 10, 35, 20, .white)
+		Raylib.drawText("Particles: \(particles.count)/\(Config.MAX_PARTICLES)", 10, 35, 20, .white)
 		Raylib.drawText("FPS: \(fps)", 10, 60, 20, .white)
-		Raylib.drawText("Particle Simulator - Swift", 10, Int32(SCREEN_HEIGHT) - 30, 20, .gray)
+		Raylib.drawText(
+			"Particle Simulator - Swift", 10, Int32(Config.SCREEN_HEIGHT) - 30, 20, .gray)
 
 		Raylib.endDrawing()
 	}
@@ -121,7 +124,7 @@ class ParticleSimulator {
 		guard !particles[particleIdx].isSleeping() else { return }
 
 		let p = particles[particleIdx]
-		let minDistSq = PARTICLE_MIN_DISTANCE * PARTICLE_MIN_DISTANCE
+		let minDistSq = Config.PARTICLE_MIN_DISTANCE * Config.PARTICLE_MIN_DISTANCE
 
 		grid.forNearby(pos: p.position) { j in
 			guard j > particleIdx else { return }
@@ -139,7 +142,7 @@ class ParticleSimulator {
 			let ny = dy / distance
 
 			// Gentle separation
-			let overlap = PARTICLE_MIN_DISTANCE - distance
+			let overlap = Config.PARTICLE_MIN_DISTANCE - distance
 			let sepX = nx * overlap * 0.15
 			let sepY = ny * overlap * 0.15
 			self.particles[particleIdx].position.x += sepX
@@ -155,7 +158,7 @@ class ParticleSimulator {
 			if velDot >= 0.0 { return }
 
 			// Impulse resolution
-			var impulseScalar = -(1.0 + RESTITUTION) * velDot * 0.5
+			var impulseScalar = -(1.0 + Config.RESTITUTION) * velDot * 0.5
 			impulseScalar = max(-50.0, min(50.0, impulseScalar))
 			let impX = nx * impulseScalar
 			let impY = ny * impulseScalar
@@ -179,10 +182,10 @@ class ParticleSimulator {
 			let tangOx = self.particles[j].velocity.x - nx * velDotO
 			let tangOy = self.particles[j].velocity.y - ny * velDotO
 
-			self.particles[particleIdx].velocity.x -= tangPx * TANGENTIAL_DAMPING
-			self.particles[particleIdx].velocity.y -= tangPy * TANGENTIAL_DAMPING
-			self.particles[j].velocity.x -= tangOx * TANGENTIAL_DAMPING
-			self.particles[j].velocity.y -= tangOy * TANGENTIAL_DAMPING
+			self.particles[particleIdx].velocity.x -= tangPx * Config.TANGENTIAL_DAMPING
+			self.particles[particleIdx].velocity.y -= tangPy * Config.TANGENTIAL_DAMPING
+			self.particles[j].velocity.x -= tangOx * Config.TANGENTIAL_DAMPING
+			self.particles[j].velocity.y -= tangOy * Config.TANGENTIAL_DAMPING
 		}
 	}
 }

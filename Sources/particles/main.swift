@@ -3,7 +3,7 @@ import Raylib
 
 let simulator = ParticleSimulator()
 
-Raylib.initWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Particle Simulator - Swift")
+Raylib.initWindow(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT, "Particle Simulator - Swift")
 Raylib.setTargetFPS(60)
 
 while !Raylib.windowShouldClose {

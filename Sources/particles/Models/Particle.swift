@@ -8,7 +8,7 @@ struct Particle {
 	var radius: Float
 	var sleepingFrames: Int = 0
 
-	init(position: Vector2, color: Color, radius: Float = PARTICLE_RADIUS) {
+	init(position: Vector2, color: Color, radius: Float = Config.PARTICLE_RADIUS) {
 		self.position = position
 		self.velocity = Vector2(x: 0, y: 0)
 		self.color = color
@@ -20,6 +20,6 @@ struct Particle {
 	}
 
 	func isSleeping() -> Bool {
-		return sleepingFrames > SLEEPING_THRESHOLD
+		return sleepingFrames > Config.SLEEPING_THRESHOLD
 	}
 }
