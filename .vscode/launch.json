@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:particles}",
+      "name": "Debug particles",
+      "target": "particles",
+      "configuration": "debug",
+      "preLaunchTask": "swift: Build Debug particles"
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:particles}",
+      "name": "Release particles",
+      "target": "particles",
+      "configuration": "release",
+      "preLaunchTask": "swift: Build Release particles"
+    }
+  ]
+}

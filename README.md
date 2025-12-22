@@ -1,32 +1,52 @@
-# particles
+# Particle Simulator - Swift Edition
 
-A particle simulator with realistic and optimised physics built with RaylibFS.
+A high-performance particle physics simulator built with Swift and Raylib.
 
-## 📹 Showcase
+## Features
 
-![Sand](https://github.com/4ster-light/particles/blob/main/.video/Showcase.gif)
+- Interactive particle spawning with mouse clicks
+- Real-time physics simulation with gravity and collisions
+- Spatial grid optimization for efficient collision detection
+- Sand particle visualization with varied colors
+- FPS counter and particle count display
 
-You can also find a full resolution video of this gif in the [here](https://github.com/4ster-light/particles/blob/main/.video/Showcase.mp4).
+## Requirements
 
-## 🚀 Getting Started
+- Swift 6+
+- Raylib 4+
+
+## Building & Running
+
+### Using Swift Package Manager
 
 ```bash
-dotnet run
+swift build -c release
+swift run -c release
 ```
 
-Or to build a release version:
+## Controls
 
-```bash
-dotnet build -c Release
-```
+- **Left Mouse Button**: Hold to spawn sand particles
+- **Close Window**: Press the window close button to exit
 
-As you can see you will need to have installed `dotnet SDK 9+` in order to run the project.
+## Technical Details
 
-## 📄 LICENSE
+- **Particles**: Up to 4096 particles simulated simultaneously
+- **Physics**: Gravity, friction, collision response with damping
+- **Optimization**: Spatial grid acceleration structure (25×16 cells)
+- **Sleeping Particles**: Optimization skips updating particles with minimal
+  motion
+- **Collision Solver**: Impulse-based response with iterative refinement
 
-GNU General Public License v3.0
+## Performance
 
-## 💝 Sponsor
+Target 60 FPS with smooth particle interactions and physics.
+
+## License
+
+MIT
+
+## Sponsor
 
 If you like this project, consider supporting me by buying me a coffee.
 
