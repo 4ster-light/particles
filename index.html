@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle Simulator</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #0a0a0a;
+        color: #ffffff;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #canvas {
+        display: block;
+        background: #000;
+        cursor: crosshair;
+        border: 2px solid #333;
+        max-width: 100vw;
+        max-height: 100vh;
+      }
+
+      .hud {
+        position: absolute;
+        font-size: 14px;
+        font-family: "Courier New", monospace;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .hud-top-left {
+        top: 12px;
+        left: 12px;
+      }
+
+      .hud-top-right {
+        top: 12px;
+        right: 12px;
+        text-align: right;
+      }
+
+      .hud-bottom-left {
+        bottom: 12px;
+        left: 12px;
+      }
+
+      .hud-bottom-right {
+        bottom: 12px;
+        right: 12px;
+        text-align: right;
+      }
+
+      .stat-label {
+        color: #888;
+        display: inline-block;
+        min-width: 80px;
+      }
+
+      .stat-value {
+        color: #0f0;
+        font-weight: bold;
+        display: inline-block;
+        min-width: 60px;
+        text-align: right;
+      }
+
+      .stat-unit {
+        color: #666;
+        font-size: 12px;
+        margin-left: 4px;
+      }
+
+      .stat-row {
+        margin: 4px 0;
+        line-height: 1.4;
+      }
+
+      .divider {
+        height: 1px;
+        background: linear-gradient(to right, #333, transparent);
+        margin: 8px 0;
+      }
+
+      .warning {
+        color: #ff6b00;
+      }
+
+      .critical {
+        color: #ff1744;
+      }
+
+      .info {
+        color: #00bfff;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="hud hud-top-left">
+      <div class="stat-row"><span class="stat-label">Controls:</span></div>
+      <div class="stat-row">
+        <span class="info">Left Click + Drag</span> to spawn sand
+      </div>
+      <div class="stat-row"><span class="info">Space</span> to clear all</div>
+      <div class="stat-row"><span class="info">P</span> to pause/resume</div>
+    </div>
+
+    <div class="hud hud-top-right">
+      <div id="fps-counter" class="stat-row">
+        <span class="stat-label">FPS</span>
+        <span class="stat-value" id="fps">60</span>
+        <span class="stat-unit">Hz</span>
+      </div>
+      <div id="frame-time" class="stat-row">
+        <span class="stat-label">Frame</span>
+        <span class="stat-value" id="frame-ms">0.00</span>
+        <span class="stat-unit">ms</span>
+      </div>
+    </div>
+
+    <div class="hud hud-bottom-left">
+      <div id="particle-count" class="stat-row">
+        <span class="stat-label">Particles</span>
+        <span class="stat-value" id="particles">0</span>
+        <span class="stat-unit">/ 4096</span>
+      </div>
+      <div id="particle-efficiency" class="stat-row">
+        <span class="stat-label">Active</span>
+        <span class="stat-value" id="active">0</span>
+        <span class="stat-unit">units</span>
+      </div>
+      <div class="divider"></div>
+      <div id="memory-stat" class="stat-row">
+        <span class="stat-label">Memory</span>
+        <span class="stat-value" id="memory">0</span>
+        <span class="stat-unit">MB</span>
+      </div>
+    </div>
+
+    <div class="hud hud-bottom-right">
+      <div id="physics-stats">
+        <div class="stat-row">
+          <span class="stat-label">Collisions</span>
+          <span class="stat-value" id="collisions">0</span>
+          <span class="stat-unit">/frame</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Avg Velocity</span>
+          <span class="stat-value" id="avg-vel">0.0</span>
+          <span class="stat-unit">px/s</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Max Velocity</span>
+          <span class="stat-value" id="max-vel">0.0</span>
+          <span class="stat-unit">px/s</span>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/app.ts"></script>
+  </body>
+</html>
