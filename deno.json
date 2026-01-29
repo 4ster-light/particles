@@ -1,0 +1,17 @@
+{
+  "imports": {
+    "typescript": "npm:typescript@^5.9.3",
+    "vite": "npm:vite@^7.3.1",
+    "@/": "./src/"
+  },
+  "tasks": {
+    "dev": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "nodeModulesDir": "manual",
+  "compilerOptions": {
+    "lib": ["dom", "dom.asynciterable", "dom.iterable", "deno.ns"],
+    "types": ["vite/client"]
+  }
+}
