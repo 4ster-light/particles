@@ -1,8 +1,9 @@
 {
   "version": "5",
   "specifiers": {
+    "npm:@types/node@^25.9.1": "25.9.1",
     "npm:typescript@^5.9.3": "5.9.3",
-    "npm:vite@^7.3.1": "7.3.1_picomatch@4.0.3"
+    "npm:vite@^7.3.1": "7.3.1_@types+node@25.9.1"
   },
   "npm": {
     "@esbuild/aix-ppc64@0.27.2": {
@@ -263,6 +264,12 @@
     "@types/estree@1.0.8": {
       "integrity": "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w=="
     },
+    "@types/node@25.9.1": {
+      "integrity": "sha512-xfrlY7UD5rMJk3ZVJP8BNzS28J36YJg+xp+LPXV1TdWxr8uMH5A860QNxYDGQe/ylDSgjxE52Q9VnO7p75tJxg==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
     "esbuild@0.27.2": {
       "integrity": "sha512-HyNQImnsOC7X9PMNaCIeAm4ISCQXs5a5YasTXVliKv4uuBo1dKrG0A+uQS8M5eXjVMnLg3WgXaKvprHlFJQffw==",
       "optionalDependencies": [
@@ -377,9 +384,13 @@
       "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
       "bin": true
     },
-    "vite@7.3.1_picomatch@4.0.3": {
+    "undici-types@7.24.6": {
+      "integrity": "sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg=="
+    },
+    "vite@7.3.1_@types+node@25.9.1": {
       "integrity": "sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==",
       "dependencies": [
+        "@types/node",
         "esbuild",
         "fdir",
         "picomatch",
@@ -390,11 +401,15 @@
       "optionalDependencies": [
         "fsevents"
       ],
+      "optionalPeers": [
+        "@types/node"
+      ],
       "bin": true
     }
   },
   "workspace": {
     "dependencies": [
+      "npm:@types/node@^25.9.1",
       "npm:typescript@^5.9.3",
       "npm:vite@^7.3.1"
     ]
